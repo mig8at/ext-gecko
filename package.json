@@ -1,0 +1,305 @@
+{
+  "name": "gecko-lambda",
+  "displayName": "Gecko - AWS Lambda Testing",
+  "description": "🦎 Agile AWS Lambda testing and development tools for Go",
+  "version": "0.2.0",
+  "publisher": "mig8at",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Testing",
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "aws",
+    "lambda",
+    "go",
+    "testing",
+    "serverless"
+  ],
+  "icon": "media/gecko.png",
+  "activationEvents": [
+    "onLanguage:go",
+    "onView:geckoLambdaExplorer"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Gecko Lambda",
+      "properties": {
+        "gecko.workspacePath": {
+          "type": "string",
+          "description": "Global path for Lambda workspace where all Lambda functions will be stored",
+          "scope": "application"
+        }
+      }
+    },
+    "views": {
+      "gecko-lambda": [
+        {
+          "id": "geckoLambdaExplorer",
+          "name": "Lambda Functions",
+          "when": "true"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "gecko-lambda",
+          "title": "Gecko Lambda",
+          "icon": "$(symbol-function)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "gecko.configure",
+        "title": "Configure Lambda",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "gecko.configureWorkspace",
+        "title": "🦎 Configure Lambda Workspace",
+        "icon": "$(folder-library)"
+      },
+      {
+        "command": "gecko.viewTemplate",
+        "title": "Edit Template (Source of Truth)",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "gecko.run",
+        "title": "Run Lambda",
+        "icon": "$(play)"
+      },
+      {
+        "command": "gecko.build",
+        "title": "Build Lambda",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "gecko.workspace",
+        "title": "Manage Lambda Workspace",
+        "icon": "$(folder-library)"
+      },
+      {
+        "command": "gecko.download",
+        "title": "Download Lambda from AWS",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "gecko.tree.download",
+        "title": "Download from AWS",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "gecko.refreshTreeView",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gecko.tree.runLambda",
+        "title": "Run Lambda",
+        "icon": "$(play)"
+      },
+      {
+        "command": "gecko.tree.buildLambda",
+        "title": "Build Lambda",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "gecko.tree.openDirectory",
+        "title": "Open Directory",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "gecko.tree.openSource",
+        "title": "Open Source File",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "gecko.tree.viewTemplate",
+        "title": "Edit Template",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "gecko.tree.viewResponse",
+        "title": "View Response",
+        "icon": "$(output)"
+      },
+      {
+        "command": "gecko.tree.removeLambda",
+        "title": "Remove Lambda",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "gecko.tree.stopApiServer",
+        "title": "Stop API Server",
+        "icon": "$(stop)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "gecko.run",
+          "when": "resourceExtname == .go && gecko.isLambdaFile && gecko.isConfigured",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gecko.build",
+          "when": "resourceExtname == .go && gecko.isLambdaFile && gecko.isConfigured",
+          "group": "navigation@2"
+        },
+        {
+          "command": "gecko.run",
+          "when": "resourceExtname == .go && gecko.isLambdaFile && !gecko.isConfigured",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gecko.configure",
+          "when": "resourceExtname == .go && gecko.isLambdaFile && !gecko.isConfigured",
+          "group": "navigation@2"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "gecko.refreshTreeView",
+          "when": "view == geckoLambdaExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "gecko.configureWorkspace",
+          "when": "view == geckoLambdaExplorer",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gecko.tree.runLambda",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "1_main@1"
+        },
+        {
+          "command": "gecko.tree.buildLambda",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "1_main@2"
+        },
+        {
+          "command": "gecko.tree.editEvent",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "2_files@1"
+        },
+        {
+          "command": "gecko.tree.viewTemplate",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "2_files@2"
+        },
+        {
+          "command": "gecko.tree.openSource",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "3_navigation@1"
+        },
+        {
+          "command": "gecko.tree.openDirectory",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "3_navigation@2"
+        },
+        {
+          "command": "gecko.tree.removeLambda",
+          "when": "view == geckoLambdaExplorer && viewItem == 'lambdaFunction'",
+          "group": "4_danger@1"
+        },
+        {
+          "command": "gecko.tree.runLambda",
+          "when": "view == geckoLambdaExplorer && viewItem == 'templateFile'",
+          "group": "inline"
+        },
+        {
+          "command": "gecko.tree.download",
+          "when": "view == geckoLambdaExplorer && viewItem == 'templateFile'",
+          "group": "inline"
+        },
+        {
+          "command": "gecko.tree.runLambda",
+          "when": "view == geckoLambdaExplorer && viewItem == 'eventFile'",
+          "group": "inline"
+        },
+        {
+          "command": "gecko.tree.editEvent",
+          "when": "view == geckoLambdaExplorer && viewItem == 'eventFile'",
+          "group": "inline"
+        },
+        {
+          "command": "gecko.tree.viewResponse",
+          "when": "view == geckoLambdaExplorer && viewItem == 'responseFile'",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "gecko.tree.runLambda",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.buildLambda",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.openDirectory",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.openSource",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.editEvent",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.viewTemplate",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.viewResponse",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.removeLambda",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.download",
+          "when": "false"
+        },
+        {
+          "command": "gecko.tree.stopApiServer",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@types/js-yaml": "^4.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  }
+}
